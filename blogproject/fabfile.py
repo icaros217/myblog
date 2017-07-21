@@ -24,5 +24,5 @@ def deploy():
         ../../env/bin/python3 manage.py collectstatic --noinput &&
         ../../env/bin/python3 manage.py migrate
         """.format(source_folder)) 
-    sudo('start gunicorn-chenghongwei.com') 
+    sudo('restart gunicorn-chenghongwei.com') 
     sudo('service nginx reload')
