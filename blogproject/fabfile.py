@@ -15,14 +15,14 @@ env.port = '22'
 
 
 def deploy():
-    source_folder = '/home/chw/sites/chenghongwei.com/myblog/blogproject' 
+    source_folder = '/home/chw/sites/chenghongwei.com/myblog' 
 
     run('cd %s && git pull' % source_folder) 
     run("""
         cd {} &&
-        ../../env/bin/pip install -r requirements.txt &&
-        ../../env/bin/python3 manage.py collectstatic --noinput &&
-        ../../env/bin/python3 manage.py migrate
+        ../env/bin/pip install -r requirements.txt &&
+        ../env/bin/python3 manage.py collectstatic --noinput &&
+        ../env/bin/python3 manage.py migrate
         """.format(source_folder)) 
     sudo('restart gunicorn-chenghongwei.com') 
     sudo('service nginx reload')
