@@ -1,0 +1,28 @@
+server {
+    charset utf-8;
+    listen 80;
+    server_name chenghongwei.com;
+
+    location /static { 
+        alias /home/chw/sites/chenghongwei.com/myblog/blogproject/static;   
+    }
+
+    location / { 
+        proxy_set_header Host $host;
+        proxy_pass http://unix:/tmp/chenghongwei.com.socket;
+    }
+}
+
+
+
+ sudo ln -s /etc/nginx/sites-available/chenghongwei.com /etc/nginx/sites-enabled/chenghongwei.com
+
+
+
+ gunicorn --bind unix:/tmp/chenghongwei.com.socket blogproject.wsgi:application
+
+
+ sudo start gunicorn-chenghongwei.com
+
+
+ sudo restart gunicorn-chenghongwei.com
