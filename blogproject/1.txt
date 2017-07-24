@@ -26,3 +26,12 @@ server {
 
 
  sudo restart gunicorn-chenghongwei.com
+
+ #激活环境
+ cd /home/chw/sites/chenghongwei.com
+ source env/bin/activate
+
+#更改模型，迁移数据库
+ cd /home/chw/sites/chenghongwei.com/myblog/blogproject
+ python manage.py makemigrations
+ python manage.py migrate
