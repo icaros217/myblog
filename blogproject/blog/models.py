@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.six import python_2_unicode_compatible
+import markdown
+from django.utils.html import strip_tags
 
 
 # python_2_unicode_compatible 装饰器用于兼容 Python2
@@ -46,6 +48,7 @@ class Post(models.Model):
     # 文章正文，我们使用了 TextField。
     # 存储比较短的字符串可以使用 CharField，但对于文章的正文来说可能会是一大段文本，因此使用 TextField 来存储大段文本。
     body = models.TextField()
+    excerpt = models.CharField(max_length=200, blank=True)
 
     # 这两个列分别表示文章的创建时间和最后一次修改时间，存储时间的字段用 DateTimeField 类型。
     created_time = models.DateTimeField()
@@ -88,3 +91,19 @@ class Post(models.Model):
     def increase_views(self):
         self.views += 1
         self.save(update_fields=['views'])
+
+    def save(self, *args, **kwargs):    
+    # 如果没有填写摘要
+    if not self.excerpt:
+        # 首先实例化一个 Markdown 类，用于渲染 body 的文本
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+        ])
+        # 先将 Markdown 文本渲染成 HTML 文本
+        # strip_tags 去掉 HTML 文本的全部 HTML 标签
+        # 从文本摘取前 54 个字符赋给 excerpt
+        self.excerpt = strip_tags(md.convert(self.body))[:54]
+
+    # 调用父类的 save 方法将数据保存到数据库中
+    super(Post, self).save(*args, **kwargs)
