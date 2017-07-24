@@ -35,3 +35,11 @@ server {
  cd /home/chw/sites/chenghongwei.com/myblog/blogproject
  python manage.py makemigrations
  python manage.py migrate
+
+
+ git remote add origin https://github.com/icaros217/myblog.git
+ git push origin master
+
+#执行 Fabric 自动部署脚本
+本地fabfile.py根目录
+ C:\Python27\Scripts\fab deploy
