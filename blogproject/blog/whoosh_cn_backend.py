@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-from jieba.analyse import ChineseAnalyzer
 
 import json
 import os
@@ -9,6 +8,8 @@ import re
 import shutil
 import threading
 import warnings
+
+from jieba.analyse import ChineseAnalyzer
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -691,7 +692,6 @@ class WhooshSearchBackend(BaseSearchBackend):
     def _from_python(self, value):
         """
         Converts Python values to a string for Whoosh.
-
         Code courtesy of pysolr.
         """
         if hasattr(value, 'strftime'):
@@ -714,7 +714,6 @@ class WhooshSearchBackend(BaseSearchBackend):
     def _to_python(self, value):
         """
         Converts values from Whoosh to native Python values.
-
         A port of the same method in pysolr, as they deal with data the same way.
         """
         if value == 'true':
@@ -759,7 +758,6 @@ class WhooshSearchQuery(BaseSearchQuery):
         """
         Provides a mechanism for sanitizing user input before presenting the
         value to the backend.
-
         Whoosh 1.X differs here in that you can no longer use a backslash
         to escape reserved characters. Instead, the whole word should be
         quoted.
