@@ -46,4 +46,4 @@ server {
  
 
 
- pip --default-timeout=1000 install -U jieba
+ pip --default-timeout=300 install -U jieba
