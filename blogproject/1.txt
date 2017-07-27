@@ -43,3 +43,7 @@ server {
 #执行 Fabric 自动部署脚本
 本地fabfile.py根目录
  C:\Python27\Scripts\fab deploy
+ 
+
+
+ pip --default-timeout=1000 install -U jieba
